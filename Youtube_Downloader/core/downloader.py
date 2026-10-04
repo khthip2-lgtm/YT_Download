@@ -30,6 +30,27 @@ if BIN_DIR.exists():
         os.environ["PATH"] = bin_path_str + os.pathsep + os.environ.get("PATH", "")
 
 
+def get_cookie_file() -> Optional[str]:
+    """Find cookies.txt if available, or write from env variable YOUTUBE_COOKIES."""
+    cookies_content = os.environ.get("YOUTUBE_COOKIES") or os.environ.get("COOKIES_TEXT")
+    if cookies_content:
+        import tempfile
+        tmp_cookie = Path(tempfile.gettempdir()) / "yt_cookies.txt"
+        tmp_cookie.write_text(cookies_content.strip(), encoding="utf-8")
+        return str(tmp_cookie)
+
+    candidates = [
+        Path(__file__).resolve().parent.parent / "cookies.txt",
+        Path(__file__).resolve().parent.parent.parent / "cookies.txt",
+        Path.cwd() / "cookies.txt",
+    ]
+    for c in candidates:
+        if c.exists() and c.is_file():
+            return str(c)
+
+    return None
+
+
 def is_valid_youtube_url(url: str) -> bool:
     """Validate if the string is a valid YouTube URL."""
     if not url or not isinstance(url, str):
@@ -135,6 +156,10 @@ class YTDownloaderCore:
         if BIN_DIR.exists():
             ydl_opts["ffmpeg_location"] = str(BIN_DIR)
 
+        cookie_path = get_cookie_file()
+        if cookie_path:
+            ydl_opts["cookiefile"] = cookie_path
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url.strip(), download=False)
             if info is None:
@@ -220,6 +245,10 @@ class YTDownloaderCore:
         }
         if BIN_DIR.exists():
             ydl_opts["ffmpeg_location"] = str(BIN_DIR)
+
+        cookie_path = get_cookie_file()
+        if cookie_path:
+            ydl_opts["cookiefile"] = cookie_path
 
         ydl_opts.update(extra_opts)
 

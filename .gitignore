@@ -41,3 +41,8 @@ mp3/
 *.swo
 .DS_Store
 Thumbs.db
+
+# Authentication / Sensitive Secrets
+*cookies.txt
+*.cookie
+.env
