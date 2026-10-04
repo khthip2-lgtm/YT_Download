@@ -126,6 +126,11 @@ class YTDownloaderCore:
             "no_warnings": True,
             "noplaylist": True,
             "skip_download": True,
+            "extractor_args": {
+                "youtube": {
+                    "player_client": ["mweb", "android", "ios", "web"]
+                }
+            },
         }
         if BIN_DIR.exists():
             ydl_opts["ffmpeg_location"] = str(BIN_DIR)
@@ -207,6 +212,11 @@ class YTDownloaderCore:
             "retries": 3,
             "continuedl": True,
             "windowsfilenames": True,
+            "extractor_args": {
+                "youtube": {
+                    "player_client": ["mweb", "android", "ios", "web"]
+                }
+            },
         }
         if BIN_DIR.exists():
             ydl_opts["ffmpeg_location"] = str(BIN_DIR)

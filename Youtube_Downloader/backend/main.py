@@ -163,6 +163,6 @@ def download_file(job_id: str):
     )
 
 
-# Mount Web Frontend Static Files
-if WEB_DIR.exists():
+# Mount Web Frontend Static Files (only for local / non-Vercel environments)
+if not os.environ.get("VERCEL") and WEB_DIR.exists():
     app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")
