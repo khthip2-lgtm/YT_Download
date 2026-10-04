@@ -48,7 +48,10 @@ WEB_DIR = BASE_DIR / "web"
 
 
 # 1. API Status Check
+@app.get("/")
+@app.get("/api")
 @app.get("/api/status")
+@app.get("/status")
 def status_check():
     """Check API server status."""
     return {
@@ -60,6 +63,7 @@ def status_check():
 
 # 2. Extract Video Information
 @app.post("/api/info", response_model=VideoInfoResponse)
+@app.post("/info", response_model=VideoInfoResponse)
 def get_video_info(req: InfoRequest):
     """Fetch video metadata and available qualities from YouTube URL."""
     if not is_valid_youtube_url(req.url):
@@ -77,6 +81,7 @@ def get_video_info(req: InfoRequest):
 
 # 3. Start Download Job
 @app.post("/api/download", response_model=DownloadJobResponse)
+@app.post("/download", response_model=DownloadJobResponse)
 def start_download(req: DownloadRequest, background_tasks: BackgroundTasks):
     """Start background download job for a YouTube URL."""
     if not is_valid_youtube_url(req.url):
@@ -105,6 +110,7 @@ def start_download(req: DownloadRequest, background_tasks: BackgroundTasks):
 
 # 4. Check Job Download Progress
 @app.get("/api/progress/{job_id}", response_model=JobProgressResponse)
+@app.get("/progress/{job_id}", response_model=JobProgressResponse)
 def get_progress(job_id: str):
     """Get real-time download progress for a specific job."""
     job = get_job_status(job_id)
@@ -124,6 +130,7 @@ def get_progress(job_id: str):
 
 # 5. Serve & Download Completed File
 @app.get("/api/file/{job_id}")
+@app.get("/file/{job_id}")
 def download_file(job_id: str):
     """Serve the downloaded file for browser/mobile download."""
     job = get_job_status(job_id)
