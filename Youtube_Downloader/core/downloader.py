@@ -128,7 +128,7 @@ class YTDownloaderCore:
             "skip_download": True,
             "extractor_args": {
                 "youtube": {
-                    "player_client": ["mweb", "android", "ios", "web"]
+                    "player_client": ["android", "ios"]
                 }
             },
         }
@@ -214,7 +214,7 @@ class YTDownloaderCore:
             "windowsfilenames": True,
             "extractor_args": {
                 "youtube": {
-                    "player_client": ["mweb", "android", "ios", "web"]
+                    "player_client": ["android", "ios"]
                 }
             },
         }
