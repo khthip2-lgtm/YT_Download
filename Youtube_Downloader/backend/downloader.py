@@ -10,8 +10,14 @@ from typing import Any, Dict, Optional
 
 from core.downloader import YTDownloaderCore
 
-# Temporary directory for web downloads
-DOWNLOAD_DIR = Path(__file__).resolve().parent.parent / "temp_downloads"
+import tempfile
+
+# Temporary directory for web downloads (writable on both local and serverless like Vercel)
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    DOWNLOAD_DIR = Path(tempfile.gettempdir()) / "temp_downloads"
+else:
+    DOWNLOAD_DIR = Path(__file__).resolve().parent.parent / "temp_downloads"
+
 DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Maximum file retention time (seconds): 1 hour
