@@ -47,8 +47,20 @@ app.add_middleware(
 WEB_DIR = BASE_DIR / "web"
 
 
-# 1. API Status Check
+# 1. Web UI Homepage & API Status Check
 @app.get("/")
+def serve_home():
+    """Serve the Web UI frontend at the root URL."""
+    index_file = WEB_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(str(index_file))
+    return {
+        "status": "online",
+        "service": "YouTube Downloader API",
+        "version": "1.0.0",
+    }
+
+
 @app.get("/api")
 @app.get("/api/status")
 @app.get("/status")
