@@ -7,7 +7,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent / "Youtube_Downloader"
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from backend.main import app as fastapi_app
+try:
+    from Youtube_Downloader.backend.main import app as fastapi_app
+except ImportError:
+    from backend.main import app as fastapi_app
 
 
 async def app(scope, receive, send):
