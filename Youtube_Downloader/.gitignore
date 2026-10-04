@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.venv/
+venv/
+ENV/
+
+# Downloads & Temporary Files
+temp_downloads/
+mydownload/
+mp3/
+*.mp4
+*.mp3
+*.mkv
+*.webm
+*.m4a
+*.zip
+
+# PyInstaller / Build
+build/
+dist/
+*.spec
+bin/ffmpeg.exe
+bin/ffprobe.exe
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

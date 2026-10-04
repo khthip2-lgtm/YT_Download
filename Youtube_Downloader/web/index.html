@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f172a" id="metaThemeColor">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="YT Downloader">
+  <meta name="description" content="កម្មវិធីទាញយកវីដេអូ និងតន្ត្រីពី YouTube កម្រិតច្បាស់ខ្ពស់ Fast & Free">
+  <title>YouTube Downloader - Pro Web App</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+  
+  <!-- Google Fonts: Inter & Kantumruy Pro for Khmer support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+  <div class="app-layout">
+    <!-- Main Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="logo-wrapper">
+          <svg class="brand-logo" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>YouTube <span class="highlight">Downloader</span></h1>
+          <span class="brand-tag">HD Video & Audio</span>
+        </div>
+      </div>
+
+      <!-- Quick Theme Toggle -->
+      <button id="btnQuickTheme" class="icon-btn" title="ប្ដូរ Theme (Dark/Light)" aria-label="Toggle Theme">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-tab="tab-download" role="tab" aria-selected="true">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>ទាញយក</span>
+      </button>
+
+      <button class="nav-tab" data-tab="tab-history" role="tab" aria-selected="false">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>ប្រវត្តិ</span>
+        <span id="historyBadge" class="tab-badge">0</span>
+      </button>
+
+      <button class="nav-tab" data-tab="tab-settings" role="tab" aria-selected="false">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>ការកំណត់</span>
+      </button>
+    </nav>
+
+    <!-- Main Container Content -->
+    <main class="main-body">
+      <!-- ================= 1. TAB: DOWNLOADER ================= -->
+      <section id="tab-download" class="tab-pane active">
+        <!-- Input URL Card -->
+        <div class="card glass-card">
+          <div class="card-header">
+            <h2>ទាញយក Video ឬ Audio ពី YouTube</h2>
+            <p class="card-desc">បិទភ្ជាប់ (Paste) តំណភ្ជាប់ YouTube ដើម្បីចាប់ផ្តើម</p>
+          </div>
+
+          <div class="url-input-container">
+            <div class="url-input-wrapper">
+              <span class="input-icon">🔗</span>
+              <input 
+                type="url" 
+                id="videoUrl" 
+                placeholder="https://www.youtube.com/watch?v=..." 
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <button id="btnClearInput" class="icon-action-btn hidden" title="សម្អាត">✕</button>
+              <button id="btnPasteInput" class="btn-paste" title="Paste ពី Clipboard">
+                <span>📋 Paste</span>
+              </button>
+            </div>
+
+            <button id="btnFetchInfo" class="btn btn-primary btn-fetch">
+              <span class="btn-text">ពិនិត្យ Video</span>
+              <span class="spinner hidden"></span>
+            </button>
+          </div>
+
+          <!-- Recent Search Chips (localStorage) -->
+          <div id="recentContainer" class="recent-container hidden">
+            <div class="recent-header">
+              <span class="recent-title">🔍 បានពិនិត្យថ្មីៗ (Recent):</span>
+              <button id="btnClearRecent" class="btn-text-only">សម្អាត</button>
+            </div>
+            <div id="recentChips" class="recent-chips"></div>
+          </div>
+
+          <!-- Alert Box -->
+          <div id="statusAlert" class="alert hidden"></div>
+        </div>
+
+        <!-- Video Information Card (Populated after info fetch) -->
+        <div id="infoCard" class="card glass-card hidden">
+          <div class="video-preview-header">
+            <div class="thumbnail-wrapper">
+              <img id="videoThumbnail" src="" alt="Thumbnail" class="thumbnail-img">
+              <span id="videoDurationBadge" class="duration-badge">0:00</span>
+            </div>
+            <div class="video-info-content">
+              <h3 id="videoTitle" class="video-title">ចំណងជើងវីដេអូ...</h3>
+              <div class="video-meta-tags">
+                <span class="meta-tag channel-tag" id="videoUploader">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                  <span id="uploaderText">Channel</span>
+                </span>
+                <span class="meta-tag" id="videoViewsTag">👁️ <span id="viewsText">0 Views</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-divider"></div>
+
+          <!-- Download Options -->
+          <div class="download-settings-grid">
+            <div class="form-group">
+              <label for="formatSelect">
+                <span>🎵 ប្រភេទ Format</span>
+              </label>
+              <select id="formatSelect" class="form-control">
+                <option value="MP4">MP4 (វីដេអូ + សំឡេង)</option>
+                <option value="MKV">MKV (វីដេអូ High Definition)</option>
+                <option value="WEBM">WEBM (វីដេអូ Web Standard)</option>
+                <option value="MP3">MP3 (តន្ត្រី / សំឡេងសុទ្ធ - Audio)</option>
+                <option value="M4A">M4A (Apple Audio Quality)</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="qualityGroup">
+              <label for="qualitySelect">
+                <span>🎚️ កម្រិតរូបភាព Quality</span>
+              </label>
+              <select id="qualitySelect" class="form-control">
+                <option value="">Best Quality (គុណភាពខ្ពស់បំផុត)</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="btnStartDownload" class="btn btn-action-download">
+            <span class="btn-icon">⚡</span>
+            <span class="btn-text">ចាប់ផ្តើមទាញយក (Download)</span>
+          </button>
+        </div>
+
+        <!-- Download Progress Card -->
+        <div id="progressCard" class="card glass-card hidden">
+          <div class="progress-card-header">
+            <div class="status-indicator-badge">
+              <span class="pulse-dot"></span>
+              <span id="statusLabel">កំពុងដំណើរការទាញយក...</span>
+            </div>
+            <span id="progressPercent" class="percent-counter">0.0%</span>
+          </div>
+
+          <div class="progress-bar-shell">
+            <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+
+          <div class="progress-meta-info">
+            <span id="progressSpeed">⚡ ល្បឿន: 0.0 MB/s</span>
+            <span id="progressEta">⏳ នៅសល់: --s</span>
+          </div>
+
+          <!-- Completed Action -->
+          <div id="downloadAction" class="download-action-container hidden">
+            <a id="btnDownloadFile" class="btn btn-save-file" href="#" target="_blank" download>
+              <span class="btn-icon">✅</span>
+              <span>រក្សាទុក File លើ Device របស់អ្នក</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. TAB: HISTORY (localStorage) ================= -->
+      <section id="tab-history" class="tab-pane">
+        <div class="card glass-card">
+          <div class="history-top-bar">
+            <div>
+              <h2>ប្រវត្តិទាញយក (Download History)</h2>
+              <p class="card-desc">រក្សាទុកក្នុង Local Storage លើឧបករណ៍របស់អ្នក</p>
+            </div>
+            <div class="history-top-actions">
+              <button id="btnClearAllHistory" class="btn btn-outline-danger btn-sm">
+                🗑️ សម្អាតប្រវត្តិ
+              </button>
+            </div>
+          </div>
+
+          <!-- Search History -->
+          <div class="history-search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="historySearchInput" placeholder="ស្វែងរកតាមចំណងជើង ឬ Channel...">
+          </div>
+
+          <!-- History List Container -->
+          <div id="historyList" class="history-list"></div>
+
+          <!-- Empty State -->
+          <div id="historyEmpty" class="empty-state">
+            <div class="empty-icon">📂</div>
+            <h3>មិនទាន់មានប្រវត្តិទាញយកនៅឡើយទេ</h3>
+            <p>រាល់វីដេអូដែលអ្នកបាន Download នឹងត្រូវបានកត់ត្រាទុកនៅទីនេះដោយស្វ័យប្រវត្តិ។</p>
+            <button class="btn btn-secondary btn-sm" onclick="switchTab('tab-download')">
+              ទាញយកវីដេអូឥឡូវនេះ
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. TAB: SETTINGS (localStorage) ================= -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="card glass-card">
+          <div class="card-header">
+            <h2>ការកំណត់ (Preferences & Storage)</h2>
+            <p class="card-desc">កំណត់ជម្រើសផ្ទាល់ខ្លួនដែលរក្សាទុកក្នុង Browser LocalStorage</p>
+          </div>
+
+          <div class="settings-list">
+            <!-- Theme Setting -->
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">🎨 ស្បែកកម្មវិធី (App Theme)</span>
+                <span class="setting-desc">ជ្រើសរើសពន្លឺនិងផ្ទៃខាងក្រោយដែលអ្នកចូលចិត្ត</span>
+              </div>
+              <div class="setting-control">
+                <select id="settingTheme" class="form-control select-sm">
+                  <option value="dark">Dark Theme (លំនាំដើម)</option>
+                  <option value="oled">AMOLED Black</option>
+                  <option value="light">Light Theme</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Default Format -->
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">🎵 Format លំនាំដើម (Default Format)</span>
+                <span class="setting-desc">ជ្រើសរើស Format ដែលត្រូវកំណត់ដំបូងពេលបើក App</span>
+              </div>
+              <div class="setting-control">
+                <select id="settingDefaultFormat" class="form-control select-sm">
+                  <option value="MP4">MP4 (វីដេអូ + សំឡេង)</option>
+                  <option value="MKV">MKV</option>
+                  <option value="WEBM">WEBM</option>
+                  <option value="MP3">MP3 (Audio Only)</option>
+                  <option value="M4A">M4A (Audio Only)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Default Quality -->
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">🎚️ Quality លំនាំដើម (Default Quality)</span>
+                <span class="setting-desc">កម្រិតរូបភាពដែលចង់ទាញយកជាអាទិភាព</span>
+              </div>
+              <div class="setting-control">
+                <select id="settingDefaultQuality" class="form-control select-sm">
+                  <option value="best">Best Quality (ខ្ពស់បំផុត)</option>
+                  <option value="1080">1080p (Full HD)</option>
+                  <option value="720">720p (HD)</option>
+                  <option value="480">480p (SD)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Auto Download Completed File -->
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">📥 ស្វ័យប្រវត្តិចាប់ផ្តើម Download</span>
+                <span class="setting-desc">បើកការទាញយកឯកសារភ្លាមៗពេល Server រៀបចំរួចរាល់</span>
+              </div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" id="settingAutoDownload" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Auto Clear Input -->
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">🧹 សម្អាត URL ស្វ័យប្រវត្តិ</span>
+                <span class="setting-desc">សម្អាតប្រអប់បញ្ចូល URL បន្ទាប់ពីទាញយកបានជោគជ័យ</span>
+              </div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" id="settingAutoClear">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- LocalStorage Stats & Reset -->
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">💾 ទំហំទិន្នន័យ Local Storage</span>
+                <span class="setting-desc" id="storageUsageText">កំពុងគណនាទំហំផ្ទុក...</span>
+              </div>
+              <div class="setting-control">
+                <button id="btnResetLocalStorage" class="btn btn-outline-danger btn-sm">
+                  កំណត់ឡើងវិញ (Reset)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notification System -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>YouTube Downloader &copy; 2026 • HTML5 + CSS3 + Vanilla JS (LocalStorage Powered)</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch((err) => {
+          console.log('SW registration note: ', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

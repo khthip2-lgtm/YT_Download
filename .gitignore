@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.venv/
+venv/
+ENV/
+
+# Large Archives & Binaries (>100MB / GitHub limits)
+*.rar
+*.zip
+*.tar.gz
+*.7z
+bin/
+*.exe
+*.dll
+*.pkg
+
+# PyInstaller / Build outputs
+build/
+dist/
+*.spec
+
+# Media & Downloads
+temp_downloads/
+mydownload/
+mp3/
+*.mp4
+*.mp3
+*.mkv
+*.webm
+*.m4a
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

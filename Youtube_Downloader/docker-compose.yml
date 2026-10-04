@@ -1,0 +1,12 @@
+
+services:
+  ytdl-webapp:
+    build: .
+    container_name: youtube_downloader_web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./temp_downloads:/app/temp_downloads
