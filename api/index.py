@@ -10,7 +10,9 @@ if str(BASE_DIR) not in sys.path:
 try:
     from Youtube_Downloader.backend.main import app as fastapi_app
 except ImportError:
-    from backend.main import app as fastapi_app
+    import importlib
+
+    fastapi_app = importlib.import_module("backend.main").app
 
 
 async def app(scope, receive, send):
